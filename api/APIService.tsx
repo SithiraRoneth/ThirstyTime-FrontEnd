@@ -12,14 +12,24 @@ export interface Beverage {
     strInstructions?: string;
 }
 
-// Fetch multiple categories
+// Fetch multiple categoriesn
 export const fetchMultipleBeverages = async (): Promise<Beverage[]> => {
-    const queries = ["coffee", "tea", "juice", "cocktail", "soda"];
+    const queries = [
+        "coffee", "tea", "juice", "cocktail", "soda",
+        "water", "smoothie", "milkshake", "lemonade",
+        "hot chocolate", "latte", "espresso", "mocha",
+        "iced tea", "iced coffee", "frappuccino", "wine",
+        "beer", "whiskey", "rum", "vodka", "champagne",
+        "margarita", "pina colada", "gin", "sangria",
+        "martini", "mojito", "long island iced tea", "apple cider",
+        "milk", "kombucha", "iced latte", "green tea", "matcha",
+        "protein shake", "yogurt drink", "coconut water", "energy drink"
+    ];
+
     try {
         const requests = queries.map((query) => axios.get<{ drinks: Beverage[] | null }>(`${BASE_URL}${query}`));
         const responses = await Promise.all(requests);
 
-        // Merge all drink lists and remove duplicates
         const allDrinks = responses.flatMap(response => response.data.drinks || []);
         const uniqueDrinks = Array.from(new Map(allDrinks.map(drink => [drink.idDrink, drink])).values());
 
