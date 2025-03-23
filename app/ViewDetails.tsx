@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import { Beverage } from "../api/APIService";
 
 type ViewDetailsRouteProp = RouteProp<{ ViewDetails: { item: Beverage } }, "ViewDetails">;
 
 const ViewDetails: React.FC = () => {
     const route = useRoute<ViewDetailsRouteProp>();
+    const navigation = useNavigation();
     const { item } = route.params;
 
     // State for size selection, price calculation, and quantity
@@ -40,6 +41,11 @@ const ViewDetails: React.FC = () => {
 
     return (
         <ScrollView className="flex-1 bg-white p-4">
+            <View className="flex-row items-center mb-4">
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text className="text-blue-900">←</Text>
+                </TouchableOpacity>
+            </View>
             <Image source={{ uri: item.strDrinkThumb }} className="w-full h-64 rounded-lg" />
             <Text className="text-2xl font-bold mt-4">{item.strDrink}</Text>
             <Text className="text-gray-600 mt-2">{item.strCategory || "Beverage"}</Text>

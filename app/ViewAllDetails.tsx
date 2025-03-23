@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {Beverage, fetchMultipleBeverages} from "../api/APIService";
 import {FlatList, TouchableOpacity, View, Text, Image} from "react-native";
@@ -18,6 +18,11 @@ const ViewAllDetails = () =>{
 
     return (
         <View className="flex-1 bg-white px-4 pt-12">
+            <View className="flex-row items-center mb-4">
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text className="text-blue-900">←</Text>
+                </TouchableOpacity>
+            </View>
             <Text className="text-lg font-bold mb-4">All Beverages</Text>
 
             <FlatList
