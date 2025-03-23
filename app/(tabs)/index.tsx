@@ -35,7 +35,7 @@ export default function HomeScreen() {
                 <View className="flex-row items-center mx-4 mt-6 bg-gray-100 rounded-full px-4 py-2">
                     <Feather name="search" size={20} color="gray"/>
                     <TextInput
-                        placeholder="Search your coffee..."
+                        placeholder="Search your beverage..."
                         className="flex-1 ml-2 text-gray-700"
                     />
                     <Feather name="sliders" size={20} color="gray"/>
