@@ -1,7 +1,44 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, StatusBar, Alert } from 'react-native';
+import axios from 'axios';
 
 const SignUpScreen = ({ navigation }) => {
+  const [form, setForm] = useState({
+    userName:'',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  // Handle input changes
+  const handleChange = (name, value) => {
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSignUp = async () => {
+    if (form.password !== form.confirmPassword) {
+      Alert.alert("Error", "Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3000/user/addUser", {
+        userName: form.userName,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (response.data.success) {
+        Alert.alert("Success", "Account created successfully!");
+        navigation.navigate("Login");
+      } else {
+        Alert.alert("Error", response.data.message);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    }
+  };
+
   return (
       <SafeAreaView className="flex-1 bg-white">
         <StatusBar barStyle="dark-content" />
@@ -24,23 +61,35 @@ const SignUpScreen = ({ navigation }) => {
           {/* Input Fields */}
           <View className="mb-4">
             <TextInput
+                placeholder="UserName"
+                className="border border-gray-300 rounded-md px-4 py-3 mb-4"
+                value={form.userName}
+                onChangeText={(text) => handleChange("userName", text)}
+            />
+            <TextInput
                 placeholder="Email"
                 className="border border-gray-300 rounded-md px-4 py-3 mb-4"
+                value={form.email}
+                onChangeText={(text) => handleChange("email", text)}
             />
             <TextInput
                 placeholder="Password"
                 secureTextEntry
                 className="border border-gray-300 rounded-md px-4 py-3 mb-4"
+                value={form.password}
+                onChangeText={(text) => handleChange("password", text)}
             />
             <TextInput
                 placeholder="Confirm Password"
                 secureTextEntry
                 className="border border-gray-300 rounded-md px-4 py-3"
+                value={form.confirmPassword}
+                onChangeText={(text) => handleChange("confirmPassword", text)}
             />
           </View>
 
           {/* Sign Up Button */}
-          <TouchableOpacity className="bg-green-900 py-3 rounded-md mb-6">
+          <TouchableOpacity onPress={handleSignUp} className="bg-green-900 py-3 rounded-md mb-6">
             <Text className="text-white text-center font-semibold">Sign up</Text>
           </TouchableOpacity>
 
@@ -54,10 +103,7 @@ const SignUpScreen = ({ navigation }) => {
           {/* Social Media Buttons */}
           <View className="flex-row justify-center space-x-6">
             <TouchableOpacity className="flex-row items-center justify-center border border-gray-300 p-3 rounded-md mb-6 bg-white">
-              <Image
-                  source={require("../assets/google.png")}
-                  style={{ width: 24, height: 24 }}
-              />
+              <Image source={require("../assets/google.png")} style={{ width: 24, height: 24 }} />
               <Text className="text-gray-700 font-semibold">Continue With Google</Text>
             </TouchableOpacity>
           </View>

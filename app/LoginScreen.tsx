@@ -7,14 +7,17 @@ import {
     Image,
     SafeAreaView,
     StatusBar,
-    Animated
+    Animated,
+    Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
     const nav = useNavigation();
-
     const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    const [form, setForm] = useState({ email: '', password: '' });
     const [isButtonPressed, setButtonPressed] = useState(false);
 
     useEffect(() => {
@@ -25,12 +28,36 @@ const LoginScreen = ({ navigation }) => {
         }).start();
     }, []);
 
-    const handleButtonPress = () => {
+    const handleChange = (name, value) => {
+        setForm({ ...form, [name]: value });
+    };
+
+    const handleLogin = async () => {
+        if (!form.email || !form.password) {
+            Alert.alert("Error", "Please fill all fields");
+            return;
+        }
+
         setButtonPressed(true);
-        setTimeout(() => {
+
+        try {
+            const response = await axios.post("http://localhost:3000/user/login", {
+                email: form.email,
+                password: form.password,
+            });
+
+            if (response.data.success) {
+                Alert.alert("Success", "Login Successful!");
+                nav.navigate("Main");
+            } else {
+                Alert.alert("Error", response.data.message || "Invalid Credentials");
+            }
+        } catch (error) {
+            Alert.alert("Error", "Something went wrong. Please try again.");
+            console.error("Login Error:", error);
+        } finally {
             setButtonPressed(false);
-            nav.navigate('Main');
-        }, 1000);
+        }
     };
 
     return (
@@ -49,18 +76,22 @@ const LoginScreen = ({ navigation }) => {
                         <TextInput
                             placeholder="Email"
                             className="border border-gray-300 rounded-md px-4 py-3 mb-4"
+                            value={form.email}
+                            onChangeText={(text) => handleChange("email", text)}
                         />
                         <TextInput
                             placeholder="Password"
                             secureTextEntry
                             className="border border-gray-300 rounded-md px-4 py-3"
+                            value={form.password}
+                            onChangeText={(text) => handleChange("password", text)}
                         />
                     </View>
 
                     {/* Sign In Button with Animation */}
                     <TouchableOpacity
                         className={`py-3 rounded-md mb-6 ${isButtonPressed ? 'bg-gray-500' : 'bg-green-900'}`}
-                        onPress={handleButtonPress}
+                        onPress={handleLogin}
                         disabled={isButtonPressed}
                     >
                         <Text className="text-white text-center font-semibold">
