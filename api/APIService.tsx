@@ -12,7 +12,7 @@ export interface Beverage {
     strInstructions?: string;
 }
 
-// Fetch multiple categoriesn
+// Fetch multiple categories
 export const fetchMultipleBeverages = async (): Promise<Beverage[]> => {
     const queries = [
         "coffee", "tea", "juice", "cocktail", "soda",

@@ -5,9 +5,9 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import HomeScreen from '../(tabs)/index';
 import ProfileScreen from './ProfileScreen ';
-// import NearbyScreen from './NearbyScreen';
-// import OrderScreen from './OrderScreen';
-// import FavoriteScreen from './FavoriteScreen';
+import CartScreen from "./CartScreen";
+import TrackScreen from "./TrackScreen";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -65,6 +65,42 @@ export default function Tabs() {
                     ),
                 }}
             />
+            <Tab.Screen
+                name="Cart"
+                component={CartScreen}
+                options={{
+                    tabBarLabel: ({ focused }) => (
+                        <Text style={{ color: focused ? activeColor : inactiveColor, fontSize: 12 }}>
+                            Cart
+                        </Text>
+                    ),
+                    tabBarIcon: ({ focused }) => (
+                        <Ionicons
+                            name={focused ? "cart" : "cart-outline"}
+                            size={24}
+                            color={focused ? activeColor : inactiveColor}
+                        />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Order"
+                component={TrackScreen}
+                options={{
+                    tabBarLabel: ({ focused }) => (
+                        <Text style={{ color: focused ? activeColor : inactiveColor, fontSize: 12 }}>
+                            Track
+                        </Text>
+                    ),
+                    tabBarIcon: ({ focused }) => (
+                        <Ionicons
+                            name={focused ? "navigate" : "navigate-circle-outline"}
+                            size={24}
+                            color={focused ? activeColor : inactiveColor}
+                        />
+                    ),
+                }}
+            />
 
             <Tab.Screen
                 name="Profile"
@@ -72,7 +108,7 @@ export default function Tabs() {
                 options={{
                     tabBarLabel: ({ focused }) => (
                         <Text style={{ color: focused ? activeColor : inactiveColor, fontSize: 12 }}>
-                            Profiles
+                            Profile
                         </Text>
                     ),
                     tabBarIcon: ({ focused }) => (

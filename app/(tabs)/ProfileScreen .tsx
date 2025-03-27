@@ -19,21 +19,21 @@ const ProfileScreen = () => {
       <View className="pt-16 pb-8 items-center">
         <View className="relative">
           <Image
-            source={{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' }}
+            source={{ uri: '' }}
             className="w-24 h-24 top-36 rounded-full border-2 border-white"
           />
           <View className="absolute bottom-0 right-0 top-52 bg-white rounded-full w-8 h-8 justify-center items-center shadow">
             <Feather name="edit-2" size={16} color="#2D6A4F" />
           </View>
         </View>
-        <Text className="text-white text-xl font-semibold mt-4 top-36">Gracia Tya</Text>
+        <Text className="text-white text-xl font-semibold mt-4 top-36">Sithira Roneth</Text>
       </View>
 
       {/* Content Section */}
       <View className="flex-1 top-60 bg-white rounded-t-3xl px-5 pt-6">
         <ScrollView showsVerticalScrollIndicator={false}>
           {menuItems.map((item, index) => (
-            <TouchableOpacity 
+            <TouchableOpacity
               key={index}
               className={`flex-row items-center py-4 ${
                 index === menuItems.length - 1 ? '' : 'border-b border-gray-100'
