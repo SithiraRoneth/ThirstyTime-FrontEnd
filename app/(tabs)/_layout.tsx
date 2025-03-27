@@ -6,7 +6,8 @@ import { Platform } from 'react-native';
 import HomeScreen from '../(tabs)/index';
 import ProfileScreen from './ProfileScreen ';
 import CartScreen from "./CartScreen";
-import TrackScreen from "./TrackScreen";
+import OrderHistory from "./OrderHistory";
+import TrackOrder from "./TrackOrder";
 
 
 const Tab = createBottomTabNavigator();
@@ -85,11 +86,29 @@ export default function Tabs() {
             />
             <Tab.Screen
                 name="Order"
-                component={TrackScreen}
+                component={OrderHistory}
                 options={{
                     tabBarLabel: ({ focused }) => (
                         <Text style={{ color: focused ? activeColor : inactiveColor, fontSize: 12 }}>
-                            Track
+                            Orders
+                        </Text>
+                    ),
+                    tabBarIcon: ({ focused }) => (
+                        <Ionicons
+                            name={focused ? "clipboard" : "clipboard-outline"}
+                            size={24}
+                            color={focused ? activeColor : inactiveColor}
+                        />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Track"
+                component={TrackOrder}
+                options={{
+                    tabBarLabel: ({ focused }) => (
+                        <Text style={{ color: focused ? activeColor : inactiveColor, fontSize: 12 }}>
+                            Tracking
                         </Text>
                     ),
                     tabBarIcon: ({ focused }) => (
