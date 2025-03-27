@@ -9,9 +9,13 @@ import TabLayout from '../app/(tabs)/_layout';
 import ViewAllDetails from '../app/ViewAllDetails';
 import ViewDetails from '../app/ViewDetails';
 import CartScreen from "./(tabs)/CartScreen";
-import { CartProvider } from '../app/CartProvider';  // ✅ Import CartProvider
+import { CartProvider } from '../app/CartProvider';
+import AddOrderDetails from "./AddOrderDetails";
+import OrderHistory from "./(tabs)/OrderHistory";
+import {RootStackParamList} from "./RootStackParamList";
+import TrackOrder from "./(tabs)/TrackOrder";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootLayout() {
     const [loaded] = useFonts({
@@ -35,6 +39,9 @@ export default function RootLayout() {
                 <Stack.Screen name="ViewAllDetails" component={ViewAllDetails} />
                 <Stack.Screen name="ViewDetails" component={ViewDetails} />
                 <Stack.Screen name="CartScreen" component={CartScreen} />
+                <Stack.Screen name="AddOrderDetails" component={AddOrderDetails} />
+                <Stack.Screen name="OrderHistory" component={OrderHistory} />
+                <Stack.Screen name="TrackOrder" component={TrackOrder} />
             </Stack.Navigator>
             <StatusBar />
         </CartProvider>
